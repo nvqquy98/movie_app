@@ -1,7 +1,8 @@
-package com.edu.movie
+package com.edu.movie.screen
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.edu.movie.R
 
 class MainActivity : AppCompatActivity() {
 
