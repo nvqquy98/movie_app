@@ -9,6 +9,6 @@ class MovieLocalDataSource : MovieDataSource.Local {
     }
 
     companion object {
-        val INSTANCE: MovieLocalDataSource by lazy { Holder.INSTANCE }
+        val instance: MovieLocalDataSource by lazy { Holder.INSTANCE }
     }
 }
