@@ -8,7 +8,10 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.edu.movie.R
+import com.edu.movie.data.model.Cast
 import com.edu.movie.data.model.MovieDetails
+import com.edu.movie.data.model.MovieItem
+import com.edu.movie.data.model.VideoYoutube
 import com.edu.movie.data.source.repository.MovieRepository
 
 class MovieDetailsFragment : Fragment(), MovieDetailsContact.View {
@@ -33,10 +36,36 @@ class MovieDetailsFragment : Fragment(), MovieDetailsContact.View {
         initPresenter()
     }
 
+    override fun getMovieDetailsSuccess(movieDetails: MovieDetails) {
+        Toast.makeText(context, movieDetails.toString(), Toast.LENGTH_SHORT).show()
+    }
+
+    override fun getListCastsSuccess(casts: List<Cast>) {
+        Toast.makeText(context, casts.toString(), Toast.LENGTH_SHORT).show()
+    }
+
+    override fun getVideosTrailerSuccess(video: VideoYoutube?) {
+        Toast.makeText(context, video.toString(), Toast.LENGTH_SHORT).show()
+    }
+
+    override fun getListMovieRecommendations(movies: List<MovieItem>) {
+
+        Toast.makeText(context, movies.toString(), Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onError(exception: Exception?) {
+        Toast.makeText(context, exception?.message, Toast.LENGTH_SHORT).show()
+    }
+
     private fun initPresenter() {
         MovieDetailsPresenter(MovieRepository.instance).apply {
             setView(this@MovieDetailsFragment)
-            idMovieDetails?.let { getMovieDetails(it) }
+            idMovieDetails?.let {
+                getMovieDetails(it)
+                getCastsInMovieDetails(it)
+                getVideoTrailer(it)
+                getListMovieRecommendations(it)
+            }
         }
     }
 
@@ -48,13 +77,5 @@ class MovieDetailsFragment : Fragment(), MovieDetailsContact.View {
             MovieDetailsFragment().apply {
                 arguments = bundleOf(ARG_ID_MOVIE_DETAIL to id)
             }
-    }
-
-    override fun getMovieDetailsSuccess(movieDetails: MovieDetails) {
-        Toast.makeText(context, movieDetails.toString(), Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onError(exception: Exception?) {
-        Toast.makeText(context, exception?.message, Toast.LENGTH_SHORT).show()
     }
 }

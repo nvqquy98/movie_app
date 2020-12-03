@@ -61,6 +61,30 @@ class ParseJsonToModel {
     }
 
     @Throws(Exception::class)
+    fun parseJsonToVideosYoutube(jsonObject: JSONObject?): VideoYoutube? {
+        jsonObject?.apply {
+            return VideoYoutube(
+                getString(VideoYoutubeEntry.ID),
+                getString(VideoYoutubeEntry.KEY_YOUTUBE),
+                getString(VideoYoutubeEntry.TYPE)
+            )
+        }
+        return null
+    }
+
+    @Throws(Exception::class)
+    fun parseJsonToCast(jsonObject: JSONObject?): Cast? {
+        jsonObject?.apply {
+            return Cast(
+                getInt(CastEntry.ID),
+                getString(CastEntry.NAME),
+                getString(CastEntry.IMAGE_URL)
+            )
+        }
+        return null
+    }
+
+    @Throws(Exception::class)
     fun parseJsonToGenres(jsonObject: JSONObject?): Genres? {
         jsonObject?.apply {
             return Genres(

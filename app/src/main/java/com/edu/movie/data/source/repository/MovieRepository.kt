@@ -1,8 +1,6 @@
 package com.edu.movie.data.source.repository
 
-import com.edu.movie.data.model.ItemMovieSlider
-import com.edu.movie.data.model.MovieDetails
-import com.edu.movie.data.model.MovieItem
+import com.edu.movie.data.model.*
 import com.edu.movie.data.source.MovieDataSource
 import com.edu.movie.data.source.local.MovieLocalDataSource
 import com.edu.movie.data.source.remote.MovieRemoteDataSource
@@ -35,7 +33,19 @@ class MovieRepository private constructor(
     }
 
     fun getMovieDetails(id: Int, listener: OnFetchDataJsonListener<MovieDetails>) {
-        remote.getMovieDetails(id, TypeEndPointMovieDetails.MOVIE_DETAILS, listener)
+        remote.getDataInMovieDetails(id, TypeEndPointMovieDetails.MOVIE_DETAILS, listener)
+    }
+
+    fun getListCastsInMovieDetails(idMovieDetails: Int, listener: OnFetchDataJsonListener<List<Cast>>) {
+        remote.getDataInMovieDetails(idMovieDetails, TypeEndPointMovieDetails.CASTS, listener)
+    }
+
+    fun getListVideosInMovieDetails(idMovieDetails: Int, listener: OnFetchDataJsonListener<List<VideoYoutube>>) {
+        remote.getDataInMovieDetails(idMovieDetails, TypeEndPointMovieDetails.VIDEO_YOUTUBE, listener)
+    }
+
+    fun getListMovieRecommendations(idMovieDetails: Int, listener: OnFetchDataJsonListener<List<MovieItem>>) {
+        remote.getDataInMovieDetails(idMovieDetails, TypeEndPointMovieDetails.RECOMMENDATIONS, listener)
     }
 
     companion object {

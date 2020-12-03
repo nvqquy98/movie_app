@@ -31,7 +31,7 @@ class MovieRemoteDataSource : MovieDataSource.Remote {
         GetJsonFromUrl(TypeModel.MOVIE_ITEM_SLIDER, listener).execute(stringUrl)
     }
 
-    override fun <T> getMovieDetails(
+    override fun <T> getDataInMovieDetails(
         idMovie: Int,
         typeEndPoint: TypeEndPointMovieDetails,
         listener: OnFetchDataJsonListener<T>

@@ -1,7 +1,9 @@
 package com.edu.movie.data.source.remote.fetchjson
 
+import com.edu.movie.data.model.CastEntry
 import com.edu.movie.data.model.ItemMovieSliderEntry
 import com.edu.movie.data.model.MovieEntry
+import com.edu.movie.data.model.VideoYoutubeEntry
 import com.edu.movie.utils.TypeModel
 import org.json.JSONArray
 import org.json.JSONObject
@@ -53,13 +55,25 @@ class ParseDataWithJson {
                         typeModel
                     )
                 }
+                TypeModel.VIDEO_YOUTUBE -> {
+                    parseJsonToList(
+                        JSONObject(jsonString).getJSONArray(VideoYoutubeEntry.LIST_VIDEOS),
+                        typeModel
+                    )
+
+                }
+                TypeModel.CAST -> {
+                    parseJsonToList(
+                        JSONObject(jsonString).getJSONArray(CastEntry.LIST_CASTS),
+                        typeModel
+                    )
+                }
                 TypeModel.COMPANY -> {
                     parseJsonToList(JSONArray(jsonString), typeModel)
                 }
                 TypeModel.GENRES -> {
                     parseJsonToList(JSONArray(jsonString), typeModel)
                 }
-                else -> null
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -79,13 +93,18 @@ class ParseDataWithJson {
             TypeModel.MOVIE_DETAILS -> {
                 return parseJsonToModel.parseJsonToMovieDetails(jsonObject)
             }
+            TypeModel.VIDEO_YOUTUBE -> {
+                return parseJsonToModel.parseJsonToVideosYoutube(jsonObject)
+            }
+            TypeModel.CAST -> {
+                return parseJsonToModel.parseJsonToCast(jsonObject)
+            }
             TypeModel.GENRES -> {
                 return parseJsonToModel.parseJsonToGenres(jsonObject)
             }
             TypeModel.COMPANY -> {
                 return parseJsonToModel.parseJsonToCompany(jsonObject)
             }
-            else -> return null
         }
     }
 
