@@ -15,19 +15,20 @@ class ParseDataWithJson {
     @Throws(Exception::class)
     fun getJsonFromUrl(urlString: String): String {
         val url = URL(urlString)
-        val httpURLConnect = url.openConnection() as HttpURLConnection
-        httpURLConnect.requestMethod = METHOD_GET
-        httpURLConnect.connectTimeout = TIME_OUT
-        httpURLConnect.readTimeout = TIME_OUT
-        httpURLConnect.doOutput = true
-        httpURLConnect.connect()
-
+        val httpURLConnect = (url.openConnection() as HttpURLConnection).apply {
+            requestMethod = METHOD_GET
+            connectTimeout = TIME_OUT
+            readTimeout = TIME_OUT
+            doOutput = true
+            connect()
+        }
         val bufferedReader = BufferedReader(InputStreamReader(url.openStream()))
         val stringBuilder = StringBuilder()
         var line: String?
         while (bufferedReader.readLine().also { line = it } != null) {
             stringBuilder.append(line)
         }
+        httpURLConnect.disconnect()
         return stringBuilder.toString()
     }
 
@@ -46,6 +47,19 @@ class ParseDataWithJson {
                         typeModel
                     )
                 }
+                TypeModel.MOVIE_DETAILS -> {
+                    parseJsonToObject(
+                        JSONObject(jsonString),
+                        typeModel
+                    )
+                }
+                TypeModel.COMPANY -> {
+                    parseJsonToList(JSONArray(jsonString), typeModel)
+                }
+                TypeModel.GENRES -> {
+                    parseJsonToList(JSONArray(jsonString), typeModel)
+                }
+                else -> null
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -62,6 +76,16 @@ class ParseDataWithJson {
             TypeModel.MOVIE_ITEM_SLIDER -> {
                 return parseJsonToModel.parseJsonToMovieItemSlider(jsonObject)
             }
+            TypeModel.MOVIE_DETAILS -> {
+                return parseJsonToModel.parseJsonToMovieDetails(jsonObject)
+            }
+            TypeModel.GENRES -> {
+                return parseJsonToModel.parseJsonToGenres(jsonObject)
+            }
+            TypeModel.COMPANY -> {
+                return parseJsonToModel.parseJsonToCompany(jsonObject)
+            }
+            else -> return null
         }
     }
 
