@@ -1,6 +1,8 @@
 package com.edu.movie.data.model
 
-data class Company(val id: Int?, val name: String?, val logoUrl: String?)
+import java.io.Serializable
+
+data class Company(val id: Int?, val name: String?, val logoUrl: String?) : Serializable
 
 object CompanyEntry {
     const val ID = "id"

@@ -17,5 +17,7 @@
     <string name="more">More</string>
     <string name="trailer_coming_soon">Trailer Coming Soon !</string>
     <string name="no_company_support_for_movie">No company support for movie</string>
+    <string name="company">Company</string>
+    <string name="cast">CAST</string>
 </resources>
 

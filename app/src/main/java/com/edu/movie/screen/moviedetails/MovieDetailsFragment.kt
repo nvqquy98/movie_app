@@ -19,6 +19,7 @@ import com.edu.movie.data.model.VideoYoutube
 import com.edu.movie.data.source.repository.MovieRepository
 import com.edu.movie.screen.cast.CastFragment
 import com.edu.movie.screen.commonView.movieItem.adapter.MoviesHorizontalAdapter
+import com.edu.movie.screen.company.CompanyFragment
 import com.edu.movie.screen.genres.DetailsGenresFragment
 import com.edu.movie.screen.moviedetails.adapter.CastsAdapter
 import com.edu.movie.screen.moviedetails.adapter.GenresAdapter
@@ -152,7 +153,13 @@ class MovieDetailsFragment : Fragment(), MovieDetailsContact.View {
                     imageViewCompany.setImageBitmap(it)
                 }.execute(Constant.BASE_URL_IMAGE + logoUrl)
                 textViewCountryCompany.text = productionCountry
+                id?.let {
+                    imageViewCompany.setOnClickListener {
+                        addFragment(CompanyFragment.newInstance(company), R.id.container)
+                    }
+                }
             }
+
             if (company == null) textViewCompanyName.text =
                 getText(R.string.no_company_support_for_movie)
             genres?.let(adapterGenres::registerData)

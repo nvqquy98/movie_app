@@ -13,5 +13,6 @@ object Constant {
     const val SORT_BY_POPULAR = "&sort_by=popularity.desc"
     const val WITH_GENRES = "&with_genres="
     const val WITH_CAST = "&with_cast="
+    const val WITH_COMPANY = "&with_companies="
     const val NULL_STRING = "null"
 }
