@@ -17,6 +17,7 @@ import com.edu.movie.data.model.MovieDetails
 import com.edu.movie.data.model.MovieItem
 import com.edu.movie.data.model.VideoYoutube
 import com.edu.movie.data.source.repository.MovieRepository
+import com.edu.movie.screen.cast.CastFragment
 import com.edu.movie.screen.commonView.movieItem.adapter.MoviesHorizontalAdapter
 import com.edu.movie.screen.genres.DetailsGenresFragment
 import com.edu.movie.screen.moviedetails.adapter.CastsAdapter
@@ -65,7 +66,11 @@ class MovieDetailsFragment : Fragment(), MovieDetailsContact.View {
     override fun loadVideoTrailerOnSuccess(video: VideoYoutube?) {
         imageButtonPlay.setOnClickListener {
             video?.keyYoutube?.let(this@MovieDetailsFragment::openYouTube)
-                ?: Toast.makeText(context, getString(R.string.trailer_coming_soon), Toast.LENGTH_SHORT).show()
+                ?: Toast.makeText(
+                    context,
+                    getString(R.string.trailer_coming_soon),
+                    Toast.LENGTH_SHORT
+                ).show()
         }
     }
 
@@ -102,7 +107,7 @@ class MovieDetailsFragment : Fragment(), MovieDetailsContact.View {
             setHasFixedSize(true)
             adapter = adapterCast.apply {
                 registerOnItemCastClickListener {
-                    Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
+                    addFragment(CastFragment.newInstance(it), R.id.container)
                 }
             }
         }
@@ -148,16 +153,27 @@ class MovieDetailsFragment : Fragment(), MovieDetailsContact.View {
                 }.execute(Constant.BASE_URL_IMAGE + logoUrl)
                 textViewCountryCompany.text = productionCountry
             }
-            if (company == null) textViewCompanyName.text = getText(R.string.no_company_support_for_movie)
+            if (company == null) textViewCompanyName.text =
+                getText(R.string.no_company_support_for_movie)
             genres?.let(adapterGenres::registerData)
         }
     }
 
     private fun openYouTube(idYoutube: String) {
         try {
-            context?.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(URI_YOUTUBE_APP + idYoutube)))
+            context?.startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(URI_YOUTUBE_APP + idYoutube)
+                )
+            )
         } catch (e: ActivityNotFoundException) {
-            context?.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(URI_YOUTUBE_WEBSITE + idYoutube)))
+            context?.startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(URI_YOUTUBE_WEBSITE + idYoutube)
+                )
+            )
         }
     }
 

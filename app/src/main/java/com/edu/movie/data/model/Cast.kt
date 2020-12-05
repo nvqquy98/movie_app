@@ -1,6 +1,8 @@
 package com.edu.movie.data.model
 
-data class Cast(val id: Int?, val name: String?, val imageUrl: String?)
+import java.io.Serializable
+
+data class Cast(val id: Int?, val name: String?, val imageUrl: String?) : Serializable
 
 object CastEntry {
     const val LIST_CASTS = "cast"

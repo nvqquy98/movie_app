@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.item_cast.view.*
 
 class CastsAdapter : RecyclerView.Adapter<CastViewHolder>() {
 
-    private var onItemCastClickListener: ((Int) -> Unit) = {}
+    private var onItemCastClickListener: ((Cast) -> Unit) = {}
     private val casts = mutableListOf<Cast>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -28,7 +28,7 @@ class CastsAdapter : RecyclerView.Adapter<CastViewHolder>() {
 
     override fun getItemCount() = casts.size
 
-    fun registerOnItemCastClickListener(onItemCastClickListener: (Int) -> Unit) {
+    fun registerOnItemCastClickListener(onItemCastClickListener: (Cast) -> Unit) {
         this.onItemCastClickListener = onItemCastClickListener
     }
 
@@ -41,7 +41,7 @@ class CastsAdapter : RecyclerView.Adapter<CastViewHolder>() {
 
 class CastViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    private var onItemCastClickListener: (Int) -> Unit = {}
+    private var onItemCastClickListener: (Cast) -> Unit = {}
 
     fun bindData(cast: Cast) {
         itemView.apply {
@@ -54,13 +54,11 @@ class CastViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             }
         }
         itemView.setOnClickListener {
-            cast.id?.let {
-                onItemCastClickListener(it)
-            }
+            onItemCastClickListener(cast)
         }
     }
 
-    fun registerOnItemCastClickListener(onItemCastClickListener: (Int) -> Unit) {
+    fun registerOnItemCastClickListener(onItemCastClickListener: (Cast) -> Unit) {
         this.onItemCastClickListener = onItemCastClickListener
     }
 }

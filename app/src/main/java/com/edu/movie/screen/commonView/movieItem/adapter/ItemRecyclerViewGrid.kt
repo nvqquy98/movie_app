@@ -22,12 +22,15 @@ class ItemMovieGridViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
                     itemView.resources.getString(R.string.percent, (it * 10).toInt().toString())
             }
             imageViewMovieGrid.setImageDrawable(null)
-            LoadImageFromUrl {
-                imageViewMovieGrid.setImageBitmap(it)
-            }.executeOnExecutor(
-                AsyncTask.THREAD_POOL_EXECUTOR,
-                Constant.BASE_URL_IMAGE + movieItem.imageUrl
-            )
+            movieItem.imageUrl?.let { url ->
+                LoadImageFromUrl {
+                    imageViewMovieGrid.setImageBitmap(it)
+                }.executeOnExecutor(
+                    AsyncTask.THREAD_POOL_EXECUTOR,
+                    Constant.BASE_URL_IMAGE + url
+                )
+            }
+
             movieItem.id?.let { id ->
                 setOnClickListener { onItemClickListener?.invoke(id) }
             }

@@ -12,5 +12,6 @@ object Constant {
     const val BASE_DISCOVER = "discover/movie"
     const val SORT_BY_POPULAR = "&sort_by=popularity.desc"
     const val WITH_GENRES = "&with_genres="
+    const val WITH_CAST = "&with_cast="
     const val NULL_STRING = "null"
 }
