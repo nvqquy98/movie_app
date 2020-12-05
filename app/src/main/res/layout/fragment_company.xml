@@ -8,7 +8,7 @@
     android:background="@color/dark_blue"
     android:clickable="true"
     android:focusable="true"
-    tools:context=".screen.cast.CastFragment">
+    tools:context=".screen.company.CompanyFragment">
 
     <ImageButton
         android:id="@+id/btnBack"
@@ -18,34 +18,34 @@
         android:background="@null"
         android:contentDescription="@null"
         android:src="@drawable/ic_backspace"
-        app:layout_constraintBottom_toBottomOf="@id/textLabelCast"
+        app:layout_constraintBottom_toBottomOf="@id/textLabelCompany"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/textLabelCast" />
+        app:layout_constraintTop_toTopOf="@id/textLabelCompany" />
 
     <TextView
-        android:id="@+id/textLabelCast"
+        android:id="@+id/textLabelCompany"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_margin="@dimen/dp_20"
         android:layout_marginStart="@dimen/dp_20"
-        android:text="@string/cast"
-        android:textSize="@dimen/sp_24"
+        android:text="@string/company"
+        android:textSize="@dimen/sp_32"
         app:layout_constraintStart_toEndOf="@id/btnBack"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewImageCast"
+        android:id="@+id/cardViewImageCompany"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="@dimen/dp_20"
         app:cardCornerRadius="@dimen/dp_40"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textLabelCast"
+        app:layout_constraintTop_toBottomOf="@+id/textLabelCompany"
         app:layout_constraintWidth_percent="0.2">
 
         <ImageView
-            android:id="@+id/imageViewCast"
+            android:id="@+id/imageViewCompany"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@null"
@@ -54,17 +54,17 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/textViewCastName"
+        android:id="@+id/textViewCompanyName"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/dp_20"
         android:layout_marginEnd="@dimen/dp_20"
         android:gravity="center_vertical"
         android:textSize="@dimen/sp_16"
-        app:layout_constraintBottom_toBottomOf="@id/cardViewImageCast"
+        app:layout_constraintBottom_toBottomOf="@id/cardViewImageCompany"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/cardViewImageCast"
-        app:layout_constraintTop_toTopOf="@id/cardViewImageCast" />
+        app:layout_constraintStart_toEndOf="@id/cardViewImageCompany"
+        app:layout_constraintTop_toTopOf="@id/cardViewImageCompany" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -74,7 +74,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardViewImageCast">
+        app:layout_constraintTop_toBottomOf="@+id/cardViewImageCompany">
 
         <TextView
             android:layout_width="match_parent"

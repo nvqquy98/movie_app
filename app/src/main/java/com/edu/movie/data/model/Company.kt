@@ -1,6 +1,10 @@
 package com.edu.movie.data.model
 
-data class Company(val id: Int?, val name: String?, val logoUrl: String?)
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class Company(val id: Int?, val name: String?, val logoUrl: String?) : Parcelable
 
 object CompanyEntry {
     const val ID = "id"

@@ -10,7 +10,9 @@ class MovieDetailsPresenter(private val repository: MovieRepository) :
 
     override fun onStart() {}
 
-    override fun onStop() {}
+    override fun onStop() {
+        view = null
+    }
 
     override fun setView(view: MovieDetailsContact.View?) {
         this.view = view

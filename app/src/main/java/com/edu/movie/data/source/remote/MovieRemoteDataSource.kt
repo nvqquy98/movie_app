@@ -89,6 +89,20 @@ class MovieRemoteDataSource : MovieDataSource.Remote {
         GetJsonFromUrl(TypeModel.MOVIE_ITEM_TRENDING, listener).execute(stringUrl)
     }
 
+    override fun <T> getMoviesByCompany(
+        idCompany: Int,
+        page: Int,
+        listener: OnFetchDataJsonListener<T>
+    ) {
+        val stringUrl =
+            Constant.BASE_URL + Constant.BASE_DISCOVER +
+                    endPointParams +
+                    Constant.SORT_BY_POPULAR +
+                    Constant.BASE_PAGE + page +
+                    Constant.WITH_COMPANY + idCompany
+        GetJsonFromUrl(TypeModel.MOVIE_ITEM_TRENDING, listener).execute(stringUrl)
+    }
+
     companion object {
         val instance by lazy { Holder.INSTANCE }
         private const val TRENDING_TOP = "trending/"
