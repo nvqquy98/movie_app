@@ -18,6 +18,7 @@ import com.edu.movie.screen.moviedetails.MovieDetailsFragment
 import com.edu.movie.utils.Constant
 import com.edu.movie.utils.TrendingMoviesType
 import com.edu.movie.utils.addFragment
+import com.edu.movie.utils.showIconLoadMore
 import kotlinx.android.synthetic.main.recyclerview_gridlayout.*
 
 class MoviesTrendingFragment : Fragment(), ViewContactTrending.View {
@@ -74,24 +75,14 @@ class MoviesTrendingFragment : Fragment(), ViewContactTrending.View {
 
     private fun initRecyclerView() {
         recyclerViewMoviesGrid.apply {
-            setHasFixedSize(true)
-            adapter = adapterTrendingMovies
-            val gridLayoutManager = (layoutManager as GridLayoutManager)
-            gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int {
-                    return when (adapterTrendingMovies.getItemViewType(position)) {
-                        MoviesGridAdapter.TYPE_PROGRESSBAR -> gridLayoutManager.spanCount
-                        MoviesGridAdapter.TYPE_MOVIE_ITEM -> MoviesGridAdapter.TYPE_MOVIE_ITEM
-                        else -> DO_SOME_THING
-                    }
-                }
-            }
+            showIconLoadMore(adapterTrendingMovies)
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
+                    val gridLayoutManager = (layoutManager as GridLayoutManager)
                     val totalItemCount = gridLayoutManager.itemCount
                     val lastVisibleItem = gridLayoutManager.findLastCompletelyVisibleItemPosition()
-                    if (!isLoading && totalItemCount <= lastVisibleItem + VISIBLE_THRESHOLD) {
+                    if (!isLoading && totalItemCount <= lastVisibleItem + Constant.VISIBLE_THRESHOLD) {
                         loadMoreData()
                         isLoading = true
                     }
@@ -134,8 +125,6 @@ class MoviesTrendingFragment : Fragment(), ViewContactTrending.View {
 
     companion object {
         private const val ARGUMENT_TRENDING = "ARGUMENT_TRENDING"
-        private const val DO_SOME_THING = -1
-        private const val VISIBLE_THRESHOLD = 5
 
         @JvmStatic
         fun newInstance(param: TrendingMoviesType) = MoviesTrendingFragment().apply {

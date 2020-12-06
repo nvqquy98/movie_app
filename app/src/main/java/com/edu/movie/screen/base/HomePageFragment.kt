@@ -11,8 +11,10 @@ import com.edu.movie.screen.favorite.FavoriteFragment
 import com.edu.movie.screen.genres.GenresFragment
 import com.edu.movie.screen.home.HomeContentFragment
 import com.edu.movie.screen.main.homePage.ViewPagerContainerAdapter
+import com.edu.movie.screen.search.SearchFragment
 import com.edu.movie.screen.trending.TrendingFragment
 import com.edu.movie.screen.utils.MenuItem
+import com.edu.movie.utils.addFragment
 import kotlinx.android.synthetic.main.fragment_home_page.*
 
 class HomePageFragment private constructor() : Fragment() {
@@ -29,10 +31,17 @@ class HomePageFragment private constructor() : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initListFragment()
+        setOnClickSearchButton()
         fragmentManager?.let {
             viewPageContainer.adapter =
                 ViewPagerContainerAdapter(it, fragments)
             initBottomBar()
+        }
+    }
+
+    private fun setOnClickSearchButton() {
+        imageButtonSearch.setOnClickListener {
+            addFragment(SearchFragment.newInstance(), R.id.container)
         }
     }
 
