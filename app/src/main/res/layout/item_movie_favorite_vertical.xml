@@ -10,6 +10,7 @@
     <TextView
         android:id="@+id/textNameMovieFavorite"
         android:layout_width="0dp"
+        android:textSize="@dimen/dp_20"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_20"
@@ -19,10 +20,9 @@
 
     <ImageButton
         android:id="@+id/imageButtonDeleteFavorite"
-        android:layout_width="@dimen/dp_16"
-        android:layout_height="@dimen/dp_16"
-        android:layout_marginEnd="@dimen/dp_4"
-        android:layout_marginBottom="@dimen/dp_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_20"
         android:background="@drawable/ic_close"
         android:contentDescription="@null"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +32,7 @@
         android:id="@+id/cardView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="@dimen/dp_8"
+        android:layout_margin="@dimen/dp_8"
         android:backgroundTint="@color/dark_blue"
         app:cardCornerRadius="@dimen/dp_20"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -14,6 +14,7 @@ object Constant {
     const val WITH_GENRES = "&with_genres="
     const val NULL_STRING = "null"
     const val NUMBER_0 = 0
+    const val NUMBER_10 = 10
     const val DO_SOME_THING = -1
     const val VISIBLE_THRESHOLD = 5
 }

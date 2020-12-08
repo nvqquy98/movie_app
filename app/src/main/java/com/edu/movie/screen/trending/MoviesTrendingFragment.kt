@@ -24,7 +24,11 @@ class MoviesTrendingFragment : Fragment(), ViewContactTrending.View {
 
     private var trendingType: TrendingMoviesType? = null
     private val adapterTrendingMovies by lazy { MoviesGridAdapter() }
-    private val presenterTrending by lazy { TrendingPresenter(MovieRepository.instance) }
+    private val presenterTrending: ViewContactTrending.Presenter by lazy {
+        TrendingPresenter(
+            MovieRepository.instance
+        )
+    }
     private var page = 1
     private var isLoading = false
 

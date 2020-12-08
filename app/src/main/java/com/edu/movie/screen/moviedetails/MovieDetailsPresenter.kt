@@ -1,23 +1,25 @@
 package com.edu.movie.screen.moviedetails
 
 import com.edu.movie.data.model.*
+import com.edu.movie.data.source.local.sqlite.ListenerDataFromDb
 import com.edu.movie.data.source.remote.OnFetchDataJsonListener
 import com.edu.movie.data.source.repository.MovieRepository
-import com.edu.movie.screen.base.BasePresenter
 
 class MovieDetailsPresenter(private val repository: MovieRepository) :
-    BasePresenter<MovieDetailsContact.View> {
+    MovieDetailsContact.Presenter {
     private var view: MovieDetailsContact.View? = null
 
     override fun onStart() {}
 
-    override fun onStop() {}
+    override fun onStop() {
+        view = null
+    }
 
     override fun setView(view: MovieDetailsContact.View?) {
         this.view = view
     }
 
-    fun getMovieDetails(id: Int) {
+    override fun getMovieDetails(id: Int) {
         repository.getMovieDetails(id, object : OnFetchDataJsonListener<MovieDetails> {
             override fun onSuccess(data: MovieDetails) {
                 view?.loadContentMovieOnSuccess(data)
@@ -29,10 +31,65 @@ class MovieDetailsPresenter(private val repository: MovieRepository) :
         })
     }
 
-    fun getVideoTrailer(idMovieDetails: Int) {
-        repository.getListVideosInMovieDetails(idMovieDetails, object : OnFetchDataJsonListener<List<VideoYoutube>> {
-            override fun onSuccess(data: List<VideoYoutube>) {
-                view?.loadVideoTrailerOnSuccess(data.firstOrNull { it.type == VideoYoutubeEntry.TYPE_TRAILER })
+    override fun getVideoTrailer(idMovieDetails: Int) {
+        repository.getListVideosInMovieDetails(
+            idMovieDetails,
+            object : OnFetchDataJsonListener<List<VideoYoutube>> {
+                override fun onSuccess(data: List<VideoYoutube>) {
+                    view?.loadVideoTrailerOnSuccess(data.firstOrNull { it.type == VideoYoutubeEntry.TYPE_TRAILER })
+                }
+
+                override fun onError(exception: Exception?) {
+                    view?.onError(exception)
+                }
+            })
+    }
+
+    override fun getCastsInMovieDetails(idMovieDetails: Int) {
+        repository.getListCastsInMovieDetails(
+            idMovieDetails,
+            object : OnFetchDataJsonListener<List<Cast>> {
+                override fun onSuccess(data: List<Cast>) {
+                    view?.loadCastsOnSuccess(data)
+                }
+
+                override fun onError(exception: Exception?) {
+                    view?.onError(exception)
+                }
+            })
+    }
+
+    override fun getListMovieRecommendations(idMovieDetails: Int) {
+        repository.getListMovieRecommendations(
+            idMovieDetails,
+            object : OnFetchDataJsonListener<List<MovieItem>> {
+                override fun onSuccess(data: List<MovieItem>) {
+                    view?.loadMoviesRecommendations(data)
+                }
+
+                override fun onError(exception: Exception?) {
+                    view?.onError(exception)
+                }
+            })
+    }
+
+    override fun getFavorite(id: Int) {
+        repository.getFavorite(id, object : ListenerDataFromDb<Favorite> {
+            override fun onSuccess(data: Favorite?) {
+                view?.getFavorite(data)
+            }
+
+            override fun onError(exception: Exception?) {
+                view?.onError(exception)
+            }
+
+        })
+    }
+
+    override fun addFavorite(favorite: Favorite) {
+        repository.addFavorite(favorite, object : ListenerDataFromDb<Boolean> {
+            override fun onSuccess(data: Boolean?) {
+                view?.addFavoriteSuccess(data == true)
             }
 
             override fun onError(exception: Exception?) {
@@ -41,22 +98,10 @@ class MovieDetailsPresenter(private val repository: MovieRepository) :
         })
     }
 
-    fun getCastsInMovieDetails(idMovieDetails: Int) {
-        repository.getListCastsInMovieDetails(idMovieDetails, object : OnFetchDataJsonListener<List<Cast>> {
-            override fun onSuccess(data: List<Cast>) {
-                view?.loadCastsOnSuccess(data)
-            }
-
-            override fun onError(exception: Exception?) {
-                view?.onError(exception)
-            }
-        })
-    }
-
-    fun getListMovieRecommendations(idMovieDetails: Int) {
-        repository.getListMovieRecommendations(idMovieDetails, object : OnFetchDataJsonListener<List<MovieItem>> {
-            override fun onSuccess(data: List<MovieItem>) {
-                view?.loadMoviesRecommendations(data)
+    override fun deleteFavorite(id: Int) {
+        repository.deleteFavorite(id, object : ListenerDataFromDb<Boolean> {
+            override fun onSuccess(data: Boolean?) {
+                view?.unFavoriteSuccess(data == true)
             }
 
             override fun onError(exception: Exception?) {

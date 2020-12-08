@@ -5,8 +5,8 @@ import com.edu.movie.screen.base.BasePresenter
 
 interface FavoriteContact {
     interface View {
-        fun loadListFavoriteSuccess(listFavorite: List<Favorite>?)
-        fun deleteSuccess(checkSuccess: Boolean?)
+        fun loadListFavoriteSuccess(listFavorite: List<Favorite>)
+        fun deleteSuccess(checkSuccess: Boolean)
         fun onError(exception: Exception?)
     }
 

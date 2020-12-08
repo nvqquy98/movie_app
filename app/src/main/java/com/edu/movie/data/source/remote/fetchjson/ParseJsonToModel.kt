@@ -51,6 +51,8 @@ class ParseJsonToModel {
                 getString(MoviesDetailsEntry.TITLE),
                 if (getString(MoviesDetailsEntry.IMAGE_URL) == Constant.NULL_STRING) null
                 else getString(MoviesDetailsEntry.IMAGE_URL),
+                if (getString(MoviesDetailsEntry.IMAGE_POSTER_URL) == Constant.NULL_STRING) null
+                else getString(MoviesDetailsEntry.IMAGE_POSTER_URL),
                 getDouble(MoviesDetailsEntry.RATE),
                 countryProduction,
                 getString(MoviesDetailsEntry.DESCRIPTION),

@@ -21,7 +21,9 @@ class FavoritePresenter(private val repository: MovieRepository) : FavoriteConta
     override fun getListFavorite() {
         repository.getListFavorite(object : ListenerDataFromDb<List<Favorite>> {
             override fun onSuccess(data: List<Favorite>?) {
-                view?.loadListFavoriteSuccess(data)
+                if (data != null) {
+                    view?.loadListFavoriteSuccess(data)
+                }
             }
 
             override fun onError(exception: Exception?) {
@@ -33,7 +35,7 @@ class FavoritePresenter(private val repository: MovieRepository) : FavoriteConta
     override fun deleteFavorite(id: Int) {
         repository.deleteFavorite(id, object : ListenerDataFromDb<Boolean> {
             override fun onSuccess(data: Boolean?) {
-                view?.deleteSuccess(data)
+                view?.deleteSuccess(data == true)
             }
 
             override fun onError(exception: Exception?) {

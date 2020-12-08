@@ -41,7 +41,7 @@
         android:background="@null"
         android:contentDescription="@null"
         android:elevation="@dimen/dp_8"
-        android:src="@drawable/ic_favorite_active"
+        android:src="@drawable/ic_heart"
         android:translationZ="@dimen/dp_8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -181,10 +181,10 @@
             android:background="@null">
 
             <TextView
-                android:layout_marginTop="@dimen/dp_20"
                 android:id="@+id/textLabelCasts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_20"
                 android:text="@string/casts"
                 android:textSize="@dimen/sp_16"
                 app:layout_constraintStart_toStartOf="parent"
