@@ -1,8 +1,10 @@
 package com.edu.movie.data.source.repository
 
+import android.content.Context
 import com.edu.movie.data.model.*
 import com.edu.movie.data.source.MovieDataSource
 import com.edu.movie.data.source.local.MovieLocalDataSource
+import com.edu.movie.data.source.local.sqlite.ListenerDataFromDb
 import com.edu.movie.data.source.remote.MovieRemoteDataSource
 import com.edu.movie.data.source.remote.OnFetchDataJsonListener
 import com.edu.movie.utils.TrendingMoviesType
@@ -15,7 +17,7 @@ class MovieRepository private constructor(
 
     private object Holder {
         val INSTANCE = MovieRepository(
-            local = MovieLocalDataSource.instance,
+            local = MovieLocalDataSource.newInstance(null),
             remote = MovieRemoteDataSource.instance
         )
     }
@@ -89,7 +91,29 @@ class MovieRepository private constructor(
         remote.getMoviesByCompany(idCompany, page, listener)
     }
 
+    fun getListFavorite(listener: ListenerDataFromDb<List<Favorite>>) {
+        local.getListFavorite(listener)
+    }
+
+
+    fun getFavorite(id: Int, listener: ListenerDataFromDb<Favorite>) {
+        local.getFavorite(id, listener)
+    }
+
+    fun addFavorite(favorite: Favorite, listener: ListenerDataFromDb<Boolean>) {
+        local.addFavorite(favorite, listener)
+    }
+
+    fun deleteFavorite(id: Int, listener: ListenerDataFromDb<Boolean>) {
+        local.deleteData(id, listener)
+    }
+
     companion object {
         val instance by lazy { Holder.INSTANCE }
+        fun newInstance(context: Context?) =
+            MovieRepository(
+                MovieLocalDataSource.newInstance(context),
+                MovieRemoteDataSource.instance
+            )
     }
 }

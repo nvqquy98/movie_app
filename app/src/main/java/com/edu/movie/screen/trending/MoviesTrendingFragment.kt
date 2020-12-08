@@ -28,7 +28,7 @@ class MoviesTrendingFragment : Fragment(), ViewContactTrending.View {
     private val presenterTrending: ViewContactTrending.Presenter by lazy {
         TrendingPresenter(MovieRepository.instance)
     }
-    private var page = 1
+    private var page = Constant.DEFAULT_PAGE
     private var isLoading = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,20 +53,20 @@ class MoviesTrendingFragment : Fragment(), ViewContactTrending.View {
         initSwipeRefresh()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenterTrending.onStop()
+    }
+
     override fun getMovieSuccess(listMovies: MutableList<MovieItem>) {
         if (page == 1) {
             adapterTrendingMovies.registerListMovies(listMovies)
-            swipeRefreshData.isRefreshing = false
+            swipeRefreshData?.isRefreshing = false
         } else {
             adapterTrendingMovies.removeMoviesLastItem()
             adapterTrendingMovies.addMovies(listMovies)
             isLoading = false
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        presenterTrending.onStop()
     }
 
     override fun onError(exception: Exception?) {

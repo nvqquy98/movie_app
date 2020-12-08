@@ -1,5 +1,7 @@
 package com.edu.movie.data.source
 
+import com.edu.movie.data.model.Favorite
+import com.edu.movie.data.source.local.sqlite.ListenerDataFromDb
 import com.edu.movie.data.source.remote.OnFetchDataJsonListener
 import com.edu.movie.utils.TrendingMoviesType
 import com.edu.movie.utils.TypeEndPointMovieDetails
@@ -8,7 +10,12 @@ interface MovieDataSource {
     /**
      *  Local
      */
-    interface Local
+    interface Local {
+        fun getListFavorite(listener: ListenerDataFromDb<List<Favorite>>)
+        fun getFavorite(id: Int, listener: ListenerDataFromDb<Favorite>)
+        fun addFavorite(favorite: Favorite, listener: ListenerDataFromDb<Boolean>)
+        fun deleteData(id: Int, listener: ListenerDataFromDb<Boolean>)
+    }
 
     /**
      *  Remote
