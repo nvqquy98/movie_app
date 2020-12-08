@@ -50,6 +50,11 @@ class MoviesTrendingFragment : Fragment(), ViewContactTrending.View {
         initSwipeRefresh()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenterTrending.onStop()
+    }
+
     override fun getMovieSuccess(listMovies: MutableList<MovieItem>) {
         if (page == 1) {
             adapterTrendingMovies.registerListMovies(listMovies)
