@@ -1,4 +1,4 @@
-package com.edu.movie.screen.cast
+package com.edu.movie.screen.company
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.edu.movie.R
-import com.edu.movie.data.model.Cast
+import com.edu.movie.data.model.Company
 import com.edu.movie.data.model.MovieItem
 import com.edu.movie.data.source.repository.MovieRepository
 import com.edu.movie.screen.commonView.movieItem.adapter.MoviesGridAdapter
@@ -19,20 +19,21 @@ import com.edu.movie.utils.Constant
 import com.edu.movie.utils.LoadImageFromUrl
 import com.edu.movie.utils.addFragment
 import com.edu.movie.utils.showIconLoadMore
-import kotlinx.android.synthetic.main.fragment_cast.*
+import kotlinx.android.synthetic.main.fragment_company.*
 import kotlinx.android.synthetic.main.recyclerview_gridlayout.*
 
-class CastFragment : Fragment(), CastContact.View {
-    private var cast: Cast? = null
+class CompanyFragment : Fragment(), CompanyContact.View {
+
+    private var company: Company? = null
     private val adapterMovies by lazy { MoviesGridAdapter() }
-    private val presenter: CastContact.Presenter by lazy { CastPresenter(MovieRepository.instance) }
+    private val presenter: CompanyContact.Presenter by lazy { CompanyPresenter(MovieRepository.instance) }
     private var isLoading = false
     private var page = Constant.DEFAULT_PAGE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            cast = it.getParcelable(ARG_CAST)
+            company = it.getParcelable(ARG_COMPANY)
         }
     }
 
@@ -40,13 +41,13 @@ class CastFragment : Fragment(), CastContact.View {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_cast, container, false)
+        return inflater.inflate(R.layout.fragment_company, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setOnClickButton()
-        initCast()
+        initCompany()
         initRecyclerView()
         initPresenter()
         initReloadPage()
@@ -80,14 +81,14 @@ class CastFragment : Fragment(), CastContact.View {
         }
     }
 
-    private fun initCast() {
-        cast?.apply {
-            imageUrl?.let { url ->
+    private fun initCompany() {
+        company?.apply {
+            logoUrl?.let { url ->
                 LoadImageFromUrl {
-                    imageViewCast?.setImageBitmap(it)
+                    imageViewCompany?.setImageBitmap(it)
                 }.execute(Constant.BASE_URL_IMAGE + url)
             }
-            textViewCastName.text = name
+            textViewCompanyName.text = name
         }
     }
 
@@ -114,13 +115,13 @@ class CastFragment : Fragment(), CastContact.View {
     }
 
     private fun loadMoreData() {
-        cast?.id?.let { idCast ->
+        company?.id?.let {
             recyclerViewMoviesGrid.post {
                 adapterMovies.addMoviesNull()
-                presenter.getMovies(idCast, ++page)
+                presenter.getMovies(it, ++page)
             }
         }
-        if (cast?.id == null) {
+        if (company?.id == null) {
             isLoading = false
             adapterMovies.removeMoviesLastItem()
         }
@@ -128,25 +129,25 @@ class CastFragment : Fragment(), CastContact.View {
 
     private fun initPresenter() {
         presenter.apply {
-            setView(this@CastFragment)
-            cast?.id?.let { getMovies(it, Constant.DEFAULT_PAGE) }
+            setView(this@CompanyFragment)
+            company?.id?.let { getMovies(it, Constant.DEFAULT_PAGE) }
         }
     }
 
     private fun initReloadPage() {
         swipeRefreshData.setOnRefreshListener {
             page = Constant.DEFAULT_PAGE
-            cast?.id?.let { presenter.getMovies(it, page) }
+            company?.id?.let { presenter.getMovies(it, page) }
         }
     }
 
     companion object {
-        private const val ARG_CAST = "ARG_CAST"
+        private const val ARG_COMPANY = "ARG_COMPANY"
 
         @JvmStatic
-        fun newInstance(cast: Cast) =
-            CastFragment().apply {
-                arguments = bundleOf(ARG_CAST to cast)
+        fun newInstance(company: Company) =
+            CompanyFragment().apply {
+                arguments = bundleOf(ARG_COMPANY to company)
             }
     }
 }
