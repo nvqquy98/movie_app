@@ -49,7 +49,7 @@ class CastViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
             cast.imageUrl?.let { url ->
                 LoadImageFromUrl {
-                    imageViewCast.setImageBitmap(it)
+                    imageViewCast?.setImageBitmap(it)
                 }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, Constant.BASE_URL_IMAGE + url)
             }
         }

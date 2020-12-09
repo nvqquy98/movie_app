@@ -4,11 +4,10 @@ import com.edu.movie.data.model.ItemMovieSlider
 import com.edu.movie.data.model.MovieItem
 import com.edu.movie.data.source.remote.OnFetchDataJsonListener
 import com.edu.movie.data.source.repository.MovieRepository
-import com.edu.movie.screen.base.BasePresenter
 import com.edu.movie.utils.Constant
 import com.edu.movie.utils.TrendingMoviesType
 
-class HomePresenter(private val repository: MovieRepository) : BasePresenter<ViewContactHome.View> {
+class HomePresenter(private val repository: MovieRepository) : ViewContactHome.Presenter {
 
     private var view: ViewContactHome.View? = null
 
@@ -42,7 +41,7 @@ class HomePresenter(private val repository: MovieRepository) : BasePresenter<Vie
             })
     }
 
-    private fun getSliderMovie() {
+    override fun getSliderMovie() {
         repository.getListMovieSlider(object :
             OnFetchDataJsonListener<MutableList<ItemMovieSlider>> {
             override fun onSuccess(data: MutableList<ItemMovieSlider>) {

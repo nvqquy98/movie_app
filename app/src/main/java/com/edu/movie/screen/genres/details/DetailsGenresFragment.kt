@@ -81,6 +81,11 @@ class DetailsGenresFragment : Fragment(), ViewContactDetailsGenres.View {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        onStop()
+    }
+
     override fun onError(exception: Exception?) {
         Toast.makeText(context, exception?.message, Toast.LENGTH_LONG).show()
     }

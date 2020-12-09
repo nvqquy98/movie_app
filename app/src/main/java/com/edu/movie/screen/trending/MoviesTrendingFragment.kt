@@ -24,7 +24,9 @@ class MoviesTrendingFragment : Fragment(), ViewContactTrending.View {
 
     private var trendingType: TrendingMoviesType? = null
     private val adapterTrendingMovies by lazy { MoviesGridAdapter() }
-    private val presenterTrending by lazy { TrendingPresenter(MovieRepository.instance) }
+    private val presenterTrending: ViewContactTrending.Presenter by lazy {
+        TrendingPresenter(MovieRepository.instance)
+    }
     private var page = 1
     private var isLoading = false
 
@@ -59,6 +61,11 @@ class MoviesTrendingFragment : Fragment(), ViewContactTrending.View {
             adapterTrendingMovies.addMovies(listMovies)
             isLoading = false
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenterTrending.onStop()
     }
 
     override fun onError(exception: Exception?) {
@@ -97,6 +104,7 @@ class MoviesTrendingFragment : Fragment(), ViewContactTrending.View {
         presenterTrending.apply {
             setView(this@MoviesTrendingFragment)
             trendingType?.let { getListMovie(Constant.DEFAULT_PAGE, it) }
+            onStart()
         }
     }
 

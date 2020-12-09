@@ -20,7 +20,7 @@ class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                     itemView.resources.getString(R.string.percent, (it * 10).toInt().toString())
             }
             textMovieName.text = movies.title
-            LoadImageFromUrl { imageMoviesItem.setImageBitmap(it) }.executeOnExecutor(
+            LoadImageFromUrl { imageMoviesItem?.setImageBitmap(it) }.executeOnExecutor(
                 AsyncTask.THREAD_POOL_EXECUTOR,
                 Constant.BASE_URL_IMAGE + movies.imageUrl
             )

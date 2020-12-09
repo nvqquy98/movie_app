@@ -32,6 +32,9 @@ class HomeContentFragment : Fragment(), ViewContactHome.View {
     private var moviesSlider = mutableListOf<ItemMovieSlider>()
     private var getCurrentItem = 0
     private var isChecked = true
+    private val homePresenter: ViewContactHome.Presenter by lazy {
+        HomePresenter(MovieRepository.instance)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +46,7 @@ class HomeContentFragment : Fragment(), ViewContactHome.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
-        initData()
+        initPresenter()
     }
 
     override fun getMovieSuccess(
@@ -65,6 +68,18 @@ class HomeContentFragment : Fragment(), ViewContactHome.View {
     override fun getImageSliderSuccess(listMovies: MutableList<ItemMovieSlider>) {
         moviesSlider = listMovies
         viewPagerMovie?.let { applySliderViewPage(viewPagerMovie) }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        onStop()
+    }
+
+    private fun initPresenter() {
+        homePresenter.apply {
+            setView(this@HomeContentFragment)
+            onStart()
+        }
     }
 
     private fun initRecyclerView() {
@@ -90,13 +105,6 @@ class HomeContentFragment : Fragment(), ViewContactHome.View {
         onClickListenerMoviesHorizontal(nowPlayingAdapter)
         onClickListenerMoviesHorizontal(upComingAdapter)
         onClickListenerMoviesHorizontal(topRateAdapter)
-    }
-
-    private fun initData() {
-        HomePresenter(MovieRepository.instance).apply {
-            setView(this@HomeContentFragment)
-            onStart()
-        }
     }
 
     @SuppressLint("WrongConstant")

@@ -16,6 +16,9 @@ class ItemGenresViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
 
     private var onItemMoreClickListener: ((Int, String) -> Unit)? = null
     private val adapterMovieGenres by lazy { MoviesHorizontalAdapter() }
+    private val presenterItemViewHolder: ViewContactItemGenres.Presenter by lazy {
+        ItemGenresPresenter(MovieRepository.instance)
+    }
 
     override fun getMoviesOnSuccess(movies: List<MovieItem>) {
         adapterMovieGenres.registerData(movies as MutableList<MovieItem>)
@@ -44,7 +47,7 @@ class ItemGenresViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
             itemView.linearLayoutGenres.setOnClickListener {
                 onItemMoreClickListener?.invoke(genres.id, genres.name)
             }
-            ItemGenresPresenter(MovieRepository.instance).apply {
+            presenterItemViewHolder.apply {
                 setView(this@ItemGenresViewHolder)
                 getMoviesByIdGenre(genres.id)
             }

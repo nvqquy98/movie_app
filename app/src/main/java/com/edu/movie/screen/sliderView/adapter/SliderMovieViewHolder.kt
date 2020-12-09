@@ -14,7 +14,7 @@ class SliderMovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
 
     fun bindData(movieSlider: ItemMovieSlider) {
         itemView.apply {
-            LoadImageFromUrl { imageMovieSlider.setImageBitmap(it) }.executeOnExecutor(
+            LoadImageFromUrl { imageMovieSlider?.setImageBitmap(it) }.executeOnExecutor(
                 AsyncTask.THREAD_POOL_EXECUTOR, Constant.BASE_URL_IMAGE + movieSlider.imageSliderUrl
             )
         }

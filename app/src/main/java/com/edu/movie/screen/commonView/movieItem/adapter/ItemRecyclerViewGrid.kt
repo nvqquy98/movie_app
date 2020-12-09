@@ -1,5 +1,6 @@
 package com.edu.movie.screen.commonView.movieItem.adapter
 
+import android.annotation.SuppressLint
 import android.os.AsyncTask
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

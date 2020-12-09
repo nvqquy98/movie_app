@@ -33,6 +33,9 @@ class MovieDetailsFragment : Fragment(), MovieDetailsContact.View {
     private val adapterCast by lazy { CastsAdapter() }
     private val adapterRecommendations by lazy { MoviesHorizontalAdapter() }
     private var idMovieDetails: Int? = null
+    private val presenterMovieDetailsContact: MovieDetailsContact.Presenter by lazy {
+        MovieDetailsPresenter(MovieRepository.instance)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +56,11 @@ class MovieDetailsFragment : Fragment(), MovieDetailsContact.View {
         backButtonClick()
         initRecyclerView()
         initPresenter()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        onStop()
     }
 
     override fun loadContentMovieOnSuccess(movieDetails: MovieDetails) {
@@ -125,7 +133,7 @@ class MovieDetailsFragment : Fragment(), MovieDetailsContact.View {
     }
 
     private fun initPresenter() {
-        MovieDetailsPresenter(MovieRepository.instance).apply {
+        presenterMovieDetailsContact.apply {
             setView(this@MovieDetailsFragment)
             idMovieDetails?.let {
                 getMovieDetails(it)
@@ -145,14 +153,14 @@ class MovieDetailsFragment : Fragment(), MovieDetailsContact.View {
             textViewDescription.text = description
             imageUrl?.let { url ->
                 LoadImageFromUrl {
-                    imageMoviesDetails.setImageBitmap(it)
+                    imageMoviesDetails?.setImageBitmap(it)
                 }.execute(Constant.BASE_URL_IMAGE + url)
             }
             val company = companies?.firstOrNull { it.logoUrl != null }
             company?.run {
                 textViewCompanyName.text = name
                 LoadImageFromUrl {
-                    imageViewCompany.setImageBitmap(it)
+                    imageViewCompany?.setImageBitmap(it)
                 }.execute(Constant.BASE_URL_IMAGE + logoUrl)
                 textViewCountryCompany.text = productionCountry
             }
