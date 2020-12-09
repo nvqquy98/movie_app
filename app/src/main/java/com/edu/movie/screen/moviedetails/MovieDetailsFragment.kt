@@ -61,7 +61,7 @@ class MovieDetailsFragment : Fragment(), MovieDetailsContact.View {
 
     override fun onDestroy() {
         super.onDestroy()
-        onStop()
+        presenterMovieDetailsContact.onStop()
     }
 
     override fun loadContentMovieOnSuccess(movieDetails: MovieDetails) {
